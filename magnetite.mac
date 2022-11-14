@@ -1,0 +1,52 @@
+#/tracking/verbose 0
+#/event/verbose 0
+/run/verbose 1
+#/process/verbose 0
+
+#Do not use Mossbauer:
+#/N03/phys/mossbauer false
+
+#/N03/det/setSize      100 nm
+#/N03/det/setAbsThick   10 nm
+#/N03/gun/beamDiam      10 nm
+
+#Half bin size (for 200 bins):
+/N03/det/setStepLimit   0.25 nm
+/run/setCut             0.25 nm
+
+#/N03/det/setGapMat G4_Galactic
+#/N03/det/setGapMat Galactic
+#/N03/det/setGapMat Water
+#/N03/det/setGapMat G4_WATER
+
+#/N03/det/setAbsMat EnrichedMagnetite
+
+#/N03/gun/enfile /mnt/hd/brachy/tube/Cu40kV/Be_0.2mm/Beryllium_0.2mm_ext_18572870gamma_gamma.fwd.energies
+
+
+#/N03/det/setExperimentType orb
+
+#/N03/det/update
+/run/initialize
+
+/process/em/deexcitation World true true true
+/process/em/fluo true
+/process/em/auger true
+/process/em/pixe true
+
+#/gun/particle gamma
+
+#/hits/inactivate voxel
+/hits/activate voxel
+
+#/gun/energy 14.4 keV
+
+/N03/event/printModulo 10000
+
+#To print exited particles:
+#/N03/det/setOutParticle all
+
+
+#/run/beamOn 1
+/run/beamOn 1000000
+

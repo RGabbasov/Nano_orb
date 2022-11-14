@@ -1,0 +1,20 @@
+#!/usr/bin/bash
+
+HH="h5 h6"
+PLOT='plot'
+CNT=0
+
+for h in $HH; do
+	xmlcols "$h" binNum height error < hist.xml > "$h.dat"
+	let ++CNT
+	if [ $CNT -ne 1 ]; then
+		PLOT+=', '
+	fi
+	PLOT+=" \"$h.dat\" with errorline"
+done
+
+gnuplot <<END
+set terminal pngcairo enhanced color font ",16" size 800,600
+set output "radial_dose.png"
+$PLOT
+END

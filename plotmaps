@@ -1,0 +1,46 @@
+#!/usr/bin/bash
+
+
+function splot {
+	xmlcols "$1" binNumX binNumY height < hist.xml > "$1.dat"
+
+	gnuplot <<END
+set terminal pngcairo enhanced color font ",16" size 800,600
+set size ratio -1
+set view map
+set surface
+#unset key
+
+set logscale zcb
+set zrange [1e+3 : 1e+9]
+
+set dgrid3d 100,200
+set palette rgbformulae 34,35,36
+
+#set cntrparam levels discrete 1e7, 2e7, 4e7, 8e7, 16e7, 32e7, 64e7
+#set contour base
+unset contour
+
+set linetype 1 lc rgb "white"
+set linetype 2 lc rgb "white"
+set linetype 3 lc rgb "white"
+set linetype 4 lc rgb "white"
+set linetype 5 lc rgb "white"
+set linetype 6 lc rgb "white"
+set linetype 7 lc rgb "white"
+set linetype 8 lc rgb "white"
+#unset colorbox
+
+
+set output "$1.png"
+splot "$1.dat" with pm3d
+END
+}
+
+HH="hh1 hh2 hh3"
+HH="hh1"
+
+for h in $HH; do
+	splot $h
+	echo $h done
+done
